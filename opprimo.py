@@ -1,10 +1,8 @@
 __author__ = 'n3tn0'
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 
 from getpass import getpass
 import smtplib
-
-
 
 #Define carriers that can be chosen from
 carriers = {'Verizon': '@vtext.com',
