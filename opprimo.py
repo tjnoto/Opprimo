@@ -1,13 +1,10 @@
 __author__ = 'n3tn0'
 __version__ = '1.0.0'
 
-###IMPORTS###
 from getpass import getpass
 import smtplib
-###END OF IMPORTS###
 
 
-###VARIABLES###
 
 #Define carriers that can be chosen from
 carriers = {'Verizon': '@vtext.com',
@@ -16,12 +13,9 @@ carriers = {'Verizon': '@vtext.com',
             'T-Mobile': '@',
             'Virgin Mobile': '@',
             'Custom': ''}
+#############THIS TO BE AN ADDED FUNCTION IN A LATER VERSION##############
 emails = {'GMail': 'smtp.gmail.com:587',
           'Hotmail': ''}
-###END OF VARIABLES###
-
-
-###PROGRAM###
 
 #Print program information
 print 'Cell Bomber'
