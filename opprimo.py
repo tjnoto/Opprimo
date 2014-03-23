@@ -1,5 +1,5 @@
 __author__ = 'n3tn0'
-__version__ = '1.0.2'
+__version__ = '1.0.3'
 
 from getpass import getpass
 import smtplib
@@ -70,7 +70,7 @@ except smtplib.SMTPAuthenticationError:
 
 #Send the message
 for i in range(amount):
-    server.sendmail(user, target_addr, message)
+    server.sendmail('', target_addr, message)
     if amount == 0:
         print '1 Message Sent'
     else:
