@@ -1,12 +1,12 @@
 __author__ = 'n3tn0'
 __base__='n3tn0/Opprimo:master'
 __baseversion__ = '1.0.2'
-__version__='ALPHA'
+__version__='BETA'
 
 import smtplib
 import sys
 import csv
-
+from telapi.telapi import rest
 
 #Read list of carriers and format a dictionary object to choose email suffix from
 with open('carrierdb.csv', mode='r') as infile:
@@ -15,21 +15,26 @@ with open('carrierdb.csv', mode='r') as infile:
         writer = csv.writer(outfile)
         carriers = {rows[0]: rows[1] for rows in reader}
 
-#Make the list of carriers uppercase to avoid conflict with user input
-carriers_upper = {}
-upper=''
-for i in carriers:
-    #upper = i.upper()
-    carriers_upper[i.upper()] = carriers[i]
+
+#Look up the cellphone number and determine the carrier
+account_sid = 'AC4c88908413a68ace1b9b4f05b5576cc0'
+auth_token  = '5e3d1e4be9a44f53bf8f2cdffdcac794'
+client      = rest.Client(account_sid, auth_token)
+account     = client.accounts[client.account_sid]
+
+carrier_details  = account.carrier.create(phone_number = '860-966-7264')
+print carrier_details
+print "Carrier Lookup Sid: %s" % carrier_details.sid
+
 
 #Determine and format the final target address
-if sys.argv[2].upper() == 'EMAIL':
-    target = sys.argv[1]
-else:
-    target = sys.argv[1] + carriers_upper[sys.argv[2].upper()]
+#if sys.argv[].upper() == 'EMAIL':
+#    target = sys.argv[1]
+#else:
+#target = sys.argv[1] + '@' + carriers[CARRIER]
 
-
-amount = sys.argv[3]
+"""
+amount = sys.argv[2]
 
 #READ FROM TEXT FILE IN FUTURE
 user = 'crush@chariot.ml'
@@ -37,7 +42,7 @@ password = 'opprimo'
 smtpserver = 'chariot.ml:25'
 
 #Get the message to be sent
-body = sys.argv[4]
+body = sys.argv[3]
 
 #Prepare message for sending
 #header = 'From: %s\n' % user
@@ -58,3 +63,4 @@ for i in range(amount):
 
 #Cleanup
 server.quit()
+"""
