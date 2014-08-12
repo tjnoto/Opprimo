@@ -1,0 +1,3 @@
+[submodule "telapi"]
+	path = telapi
+	url = https://github.com/TelAPI/telapi-python
