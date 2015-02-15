@@ -6,7 +6,9 @@ __version__='ALPHA'
 import smtplib
 import sys
 import csv
+import os
 
+os.chdir('modules/'+sys.argv[0])
 
 #Read list of carriers and format a dictionary object to choose email suffix from
 with open('carrierdb.csv', mode='r') as infile:
