@@ -7,6 +7,7 @@ import smtplib
 import sys
 import csv
 import os
+lsls
 
 os.chdir('modules/'+sys.argv[0])
 
@@ -34,9 +35,9 @@ else:
 amount = sys.argv[3]
 
 #READ FROM TEXT FILE IN FUTURE
-user = 'crush@chariot.ml'
-password = 'opprimo'
-smtpserver = 'chariot.ml:25'
+user = 'n3tn0.chariot@gmail.com'
+password = 'chariottest'
+smtpserver = 'smtp.gmail.com:25'
 
 #Get the message to be sent
 body = sys.argv[4]
