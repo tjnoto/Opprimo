@@ -7,7 +7,6 @@ import smtplib
 import sys
 import csv
 import os
-lsls
 
 os.chdir('modules/'+sys.argv[0])
 
