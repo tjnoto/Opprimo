@@ -8,7 +8,8 @@ import sys
 import csv
 import os
 
-os.chdir('modules/'+sys.argv[0])
+#os.chdir('modules/'+sys.argv[0])
+os.chdir(sys.argv[0][:-7])
 
 #Read list of carriers and format a dictionary object to choose email suffix from
 with open('carrierdb.csv', mode='r') as infile:
@@ -28,7 +29,7 @@ for i in carriers:
 if sys.argv[2].upper() == 'EMAIL':
     target = sys.argv[1]
 else:
-    target = sys.argv[1] + carriers_upper[sys.argv[2].upper()]
+    target = sys.argv[1] + '@' + carriers_upper[sys.argv[2].upper()]
 
 
 amount = sys.argv[3]
@@ -36,7 +37,7 @@ amount = sys.argv[3]
 #READ FROM TEXT FILE IN FUTURE
 user = 'n3tn0.chariot@gmail.com'
 password = 'chariottest'
-smtpserver = 'smtp.gmail.com:25'
+smtpserver = 'smtp.gmail.com:587'
 
 #Get the message to be sent
 body = sys.argv[4]
@@ -45,8 +46,11 @@ body = sys.argv[4]
 #header = 'From: %s\n' % user
 #header += 'To: %s\n' % ','.join(target_addr)
 #message = header + body
-server = smtplib.SMTP(smtpserver)
-server.starttls()
+try:
+    server = smtplib.SMTP(smtpserver)
+    server.starttls()
+except:
+    exit()
 
 #Login to the email server
 try:
@@ -55,7 +59,7 @@ except smtplib.SMTPAuthenticationError:
     exit()
 
 #Send the message
-for i in range(amount):
+for i in range(int(amount)+1):
     server.sendmail(user, target, body)
 
 #Cleanup
