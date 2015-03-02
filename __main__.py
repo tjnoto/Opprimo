@@ -67,5 +67,6 @@ response = open('../response.txt')
 response.write(sys.argv[1] + 'has been oppressed.')
 
 #Cleanup
+os.remove('carierdb_new.csv')
 server.quit()
 response.close()
