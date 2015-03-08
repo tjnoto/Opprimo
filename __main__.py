@@ -9,7 +9,7 @@ import csv
 import os
 
 #os.chdir('modules/'+sys.argv[0])
-os.chdir(sys.argv[0][:-7])
+os.chdir(sys.argv[0][:-11])
 
 # Read list of carriers and format a dictionary object to choose email suffix from
 with open('carrierdb.csv', mode='r') as infile:
@@ -63,7 +63,7 @@ for i in range(int(amount)+1):
     server.sendmail(user, target, body)
 
 #Write response
-response = open('../response.txt')
+response = open('../response.txt', 'w')
 response.write(sys.argv[1] + 'has been oppressed.')
 
 #Cleanup
